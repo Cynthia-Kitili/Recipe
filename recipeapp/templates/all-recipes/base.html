@@ -1,4 +1,5 @@
 {% load bootstrap3 %}
+{% load static%}
 
 <!DOCTYPE html>
 <html>
@@ -12,11 +13,15 @@
   {% endif %}
   {% block styles %}
     {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/baserecipe.css' %}">
+
   {% endblock %}
 
 
 </head>
 <body>
+    {% include "navbar.html" %}
+
     {% block content %} <h1 class= 'text-center'>Recipes posted on: {{date|date:"l d-F Y"}}</h1> {%endblock%}
 
     {% block scripts %}
