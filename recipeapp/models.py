@@ -9,13 +9,16 @@ class Chef(models.Model):
     def __str__(self):
         return self.first_name
 
+    def save_chef(self):
+        self.save()    
+
 class food(models.Model):
     name=models.CharField(max_length=30)
 
     def __str__(self):
         return self.name
 
-class recipe(models.Model):
+class Recipe(models.Model):
     name = models.CharField(max_length =60)
     ingredients = models.TextField()
     procedure = models.TextField()
