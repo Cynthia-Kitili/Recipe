@@ -1,6 +1,6 @@
 from django.test import TestCase
-from .models import Chef,Recipe,food
-
+from .models import Chef,Recipe,foods
+import datetime as dt
 
 # Create your tests here.
 class ChefTestClass(TestCase):
@@ -30,13 +30,22 @@ class RecipeTestClass(TestCase):
         self.new_food = foods(name = 'testing')
         self.new_food.save()
 
-        self.new_recipe= Recipe(chef =self.cynthia ,food_name = ' chicken',ingredients = 'water, salt' procedure= "boil chicken")
+        self.new_recipe= Recipe(chef =self.cynthia ,food_name = ' chicken',ingredients = 'water, salt' ,procedure= "boil chicken")
         self.new_recipe.save()
 
-        self.new_recipe.foods.add(self.new_food)
+        self.new_recipe.food.add(self.new_food)
 
     def tearDown(self):
         Chef.objects.all().delete()
         foods.objects.all().delete()
         Recipe.objects.all().delete()
 
+    def test_get_recipe_today(self):
+        today_recipe = Recipe.todays_recipe()
+        self.assertTrue(len(today_recipe)>0)    
+
+    def test_get_recipe_by_date(self):
+        test_date = '2017-03-17'
+        date = dt.datetime.strptime(test_date, '%Y-%m-%d').date()
+        recipe_by_date = Recipe.days_recipe(date)
+        self.assertTrue(len(recipe_by_date) == 0)

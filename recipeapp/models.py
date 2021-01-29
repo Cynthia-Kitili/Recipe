@@ -1,4 +1,5 @@
 from django.db import models
+import datetime as dt
 
 # Create your models here.
 class Chef(models.Model):
@@ -14,7 +15,7 @@ class Chef(models.Model):
     def save_chef(self):
         self.save()    
 
-class food(models.Model):
+class foods(models.Model):
     name=models.CharField(max_length=30)
 
     def __str__(self):
@@ -25,6 +26,16 @@ class Recipe(models.Model):
     ingredients = models.TextField()
     procedure = models.TextField()
     chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
-    food=models.ManyToManyField(food)
+    food=models.ManyToManyField(foods)
     pub_date = models.DateTimeField(auto_now_add=True)
     
+    @classmethod
+    def todays_recipe(cls):
+        today = dt.date.today()
+        recipe = cls.objects.filter(pub_date__date = today)
+        return recipe
+
+    @classmethod
+    def days_recipe(cls,date):
+        recipe = cls.objects.filter(pub_date__date = date)
+        return recipe
