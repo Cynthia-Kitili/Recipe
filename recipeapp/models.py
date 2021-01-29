@@ -28,7 +28,8 @@ class Recipe(models.Model):
     chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
     food=models.ManyToManyField(foods)
     pub_date = models.DateTimeField(auto_now_add=True)
-    
+    food_image = models.ImageField(upload_to = 'recipe/', default="DEFAULT VALUE")
+
     @classmethod
     def todays_recipe(cls):
         today = dt.date.today()
@@ -38,4 +39,9 @@ class Recipe(models.Model):
     @classmethod
     def days_recipe(cls,date):
         recipe = cls.objects.filter(pub_date__date = date)
+        return recipe
+    
+    @classmethod
+    def search_by_food_name(cls,search_term):
+        recipe = cls.objects.filter(food_name__icontains=search_term)
         return recipe

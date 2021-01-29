@@ -30,3 +30,15 @@ def past_days_recipe(request, past_date):
 
     return render(request, 'all-recipes/past-recipe.html', {"date": date,"recipe":recipe})
 
+def search_results(request):
+
+    if 'recipe' in request.GET and request.GET["recipe"]:
+        search_term = request.GET.get("recipe")
+        searched_recipe = Recipe.search_by_food_name(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'all-recipes/search.html',{"message":message,"recipe": searched_recipe})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'all-recipes/search.html',{"message":message})
