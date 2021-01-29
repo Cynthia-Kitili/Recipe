@@ -21,7 +21,7 @@ class food(models.Model):
         return self.name
 
 class Recipe(models.Model):
-    name = models.CharField(max_length =60)
+    food_name = models.CharField(max_length =60)
     ingredients = models.TextField()
     procedure = models.TextField()
     chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
