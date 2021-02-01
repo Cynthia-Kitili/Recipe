@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
-from django.http  import HttpResponse
+from django.http import HttpResponse, Http404,HttpResponseRedirect
 import datetime as dt
-from .models import Recipe
+from .models import Recipe, RecipeRecipients
 from .forms import RecipeForm
 
 
@@ -15,7 +15,12 @@ def recipe_today(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         if form.is_valid():
-            print('valid')
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+            recipient = RecipeRecipients(name = name,email =email)
+            recipient.save()
+            HttpResponseRedirect('recipe_today')
+            
     else:
         form = RecipeForm()
 

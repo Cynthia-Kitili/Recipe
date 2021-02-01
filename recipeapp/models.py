@@ -45,3 +45,8 @@ class Recipe(models.Model):
     def search_by_food_name(cls,search_term):
         recipe = cls.objects.filter(food_name__icontains=search_term)
         return recipe
+
+class RecipeRecipients(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()
+
