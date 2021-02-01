@@ -11,7 +11,7 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand logo" href=" / "><i class="fa fa-instagram" aria-hidden="true"></i> FLASHCARDS</a>
+                <a class="navbar-brand logo" href=" / "><i class="fa fa-instagram" aria-hidden="true"></i> GLOBAL RECIPES</a>
             </div>
             <!-- Search form -->
             <div class="col-md-4  navabr-right">
@@ -29,9 +29,6 @@
             <div class="col-sm-6 col-md-6">
                 {% if user.is_authenticated %}
                 <ul>
-                    <li>
-                        <a href="/">Timeline</a>
-                    </li>
 
                     <li>
                         <a href="{%url 'new-recipe'%}">Create Article</a>
