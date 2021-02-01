@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http  import HttpResponse
 import datetime as dt
 from .models import Recipe
+from .forms import RecipeForm
+
 
 # Create your views here.
 def welcome(request):
@@ -10,8 +12,14 @@ def welcome(request):
 def recipe_today(request):
     date = dt.date.today()
     recipe = Recipe.todays_recipe()
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            print('valid')
+    else:
+        form = RecipeForm()
 
-    return render(request, 'all-recipes/today-recipe.html', {"date": date,"recipe":recipe})   
+    return render(request, 'all-recipes/today-recipe.html', {"date": date,"recipe":recipe,"letterForm":form})   
 
 def past_days_recipe(request, past_date):
 

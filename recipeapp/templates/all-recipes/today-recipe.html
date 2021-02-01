@@ -1,4 +1,5 @@
 {%extends 'all-recipes/base.html'%}
+{% load bootstrap3 %}
 
 {% block content %}
 {{block.super}}
@@ -27,6 +28,17 @@
     {% endfor %}
   
   </div>
+  <div class="container-fluid">
+
+    <form  action="{%url 'recipeToday'%}" method="post">
+      {%csrf_token%}
+  
+      {% bootstrap_form letterForm layout='inline' %}
+      <input type="submit" value="Subscribe">
+    </form>
+  
+  </div>
+  
   
 
 {% endblock %}
