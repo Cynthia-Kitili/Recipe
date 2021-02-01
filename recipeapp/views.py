@@ -42,3 +42,10 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-recipes/search.html',{"message":message})
+
+def recipe(request,recipe_id):
+    try:
+        recipe = Recipe.objects.get(id = recipe_id)
+    except DoesNotExist:
+        raise Http404()
+    return render(request,"all-recipes/recipe.html", {"recipe":recipe})
