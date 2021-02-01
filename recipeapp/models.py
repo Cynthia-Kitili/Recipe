@@ -28,11 +28,11 @@ class Recipe(models.Model):
     food_name = models.CharField(max_length =60)
     ingredients = models.TextField()
     procedure = models.TextField()
-    chef = models.ForeignKey(User, on_delete=models.CASCADE)
-    food=models.ManyToManyField(foods)
-    post = HTMLField(default='DEFAULT VALUE')
+    chef = models.ForeignKey(User, on_delete=models.CASCADE, default='1', blank = True)
+    # food=models.ManyToManyField(foods)
+    post = HTMLField( default='1')
     pub_date = models.DateTimeField(auto_now_add=True)
-    food_image = models.ImageField(upload_to = 'recipe/', default="DEFAULT VALUE")
+    food_image = models.ImageField(upload_to = 'recipe/',  default='1', blank = True)
 
     @classmethod
     def todays_recipe(cls):
