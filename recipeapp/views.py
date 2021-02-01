@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404,HttpResponseRedirect
 import datetime as dt
 from .models import Recipe, RecipeRecipients
 from .forms import RecipeForm
+from .email import send_welcome_email
 
 
 # Create your views here.
@@ -19,6 +20,7 @@ def recipe_today(request):
             email = form.cleaned_data['email']
             recipient = RecipeRecipients(name = name,email =email)
             recipient.save()
+            send_welcome_email(name,email)
             HttpResponseRedirect('recipe_today')
             
     else:

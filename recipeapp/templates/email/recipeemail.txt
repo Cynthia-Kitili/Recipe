@@ -1,0 +1,3 @@
+Hello {{name}}
+
+Welcome to the Global Recipes . You will find the most exciting recipes in the world.
