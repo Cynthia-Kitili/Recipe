@@ -1,34 +1,80 @@
+{% load bootstrap3 %}{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{% static 'fontawesome_free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="{% url 'recipeToday' %}"> Global Recipe</a>
-      </div>
-
-      <!-- Adding a search form  -->
-      <div class="col-sm-4 col-md-4 navbar-right">
-
-        <form class="navbar-form" role="search" action="{% url 'search_results' %}">
-
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Recipe" name="recipe">
-            <div class="input-group-btn">
-              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand logo" href=" / "><i class="fa fa-instagram" aria-hidden="true"></i> FLASHCARDS</a>
             </div>
-          </div>
-
-        </form>
-      </div>
-      <!-- search form end -->
-    </div>
-  </nav>
-
+            <!-- Search form -->
+            <div class="col-md-4  navabr-right">
+                <form class="navbar-form" role="search" action="{% url 'search_results' %}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search Post" name="image">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+                    </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- End of search form -->
+            <div class="col-sm-6 col-md-6">
+                {% if user.is_authenticated %}
+                <ul>
+                    <li>
+                        <a href="/">Timeline</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'recipeToday'%}">New Post</a>
+                    </li>
+                    <li>
+                        
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account <span class="caret"></span> </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="/accounts/password/change">Change Password</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'logout' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                {% else %}
+                <li>
+                    <a class='btn btn-default' href="/accounts/login">Login</a>
+                </li>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
 </body>
 </html>
+<style>
+    li {
+        display: inline;
+        text-transform: uppercase;
+        padding: 10px;
+    }
+    nav {
+        background-color: #162A3E;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        color: #fff;
+    }
+    .logo {
+        font-size: 200%;
+        color: white;
+    }
+</style>
