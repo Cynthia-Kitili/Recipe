@@ -10,7 +10,8 @@ urlpatterns=[
     url(r'^search/', views.search_results, name='search_results'),
     url(r'^recipe/(\d+)',views.recipe, name ='recipe'),
     url(r'^logout/$',views.logout_request,name="logout"),
-    
+    url(r'^new/recipe$', views.new_recipe, name='new-recipe')
+
 
 ]
 

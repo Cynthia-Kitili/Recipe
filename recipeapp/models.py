@@ -1,5 +1,8 @@
 from django.db import models
 import datetime as dt
+from django.contrib.auth.models import User
+from tinymce.models import HTMLField
+
 
 # Create your models here.
 class Chef(models.Model):
@@ -25,8 +28,9 @@ class Recipe(models.Model):
     food_name = models.CharField(max_length =60)
     ingredients = models.TextField()
     procedure = models.TextField()
-    chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
+    chef = models.ForeignKey(User, on_delete=models.CASCADE)
     food=models.ManyToManyField(foods)
+    post = HTMLField(default='DEFAULT VALUE')
     pub_date = models.DateTimeField(auto_now_add=True)
     food_image = models.ImageField(upload_to = 'recipe/', default="DEFAULT VALUE")
 

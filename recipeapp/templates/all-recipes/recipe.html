@@ -11,14 +11,25 @@
    <div class="row">
      <h1 class="text-center">{{recipe.food_name}}</h1>
    </div>
-
    <div class="row">
-     <p>{{recipe.post}}</p>
-   </div>
+    <h1 class="text-center">{{recipe.title}}</h1>
+  </div>
 
+
+  
    <div class="row">
-     <p>Posted {{recipe.pub_date|timesince}} by {{recipe.chef.first_name}}</p>
-   </div>
+    {% autoescape on %}
+    {{recipe.post| safe}}
+   {% endautoescape %}
+
+  </div>
+
+  <div class="row">
+    <p>Posted {{recipe.pub_date|timesince}} by {{recipe.chef.first_name}}</p>
+  </div>
+
+</div>
+
 
  </div>
 

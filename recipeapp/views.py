@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 import datetime as dt
 from .models import Recipe, RecipeRecipients
-from .forms import RecipeForm, SignUpForm
+from .forms import RecipeForm, SignUpForm, NewRecipeForm
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -87,3 +87,18 @@ def signUp(request):
     else:
         form = SignUpForm()
     return render(request,'registration/registration_form.html',{'form':form})
+
+@login_required(login_url='/accounts/login/')
+def new_recipe(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewRecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.editor = current_user
+            recipe.save()
+        return redirect('recipeToday')
+
+    else:
+        form = NewRecipeForm()
+    return render(request, 'new_recipe.html', {"form": form})
