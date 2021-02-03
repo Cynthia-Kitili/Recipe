@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
-from .models import Recipe
+from .models import Recipe,Image
 
 class RecipeForm(forms.Form):
     your_name = forms.CharField(label='First Name',max_length=30)
@@ -16,7 +16,7 @@ class SignUpForm(UserCreationForm):
 
 class NewRecipeForm(forms.ModelForm):
     class Meta:
-        model = Recipe
+        model = Image
         exclude = ['chef', 'pub_date']
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),

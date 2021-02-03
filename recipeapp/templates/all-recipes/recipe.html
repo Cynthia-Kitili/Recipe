@@ -5,27 +5,27 @@
  <div class="container">
 
    <div class="row">
-     <img src="{{recipe.food_image.url}}"  class="img-responsive" alt="">
+     <img src="{{image.food_image.url}}"  class="img-responsive" alt="">
    </div>
 
    <div class="row">
-     <h1 class="text-center">{{recipe.food_name}}</h1>
+     <h1 class="text-center">{{image.food_name}}</h1>
    </div>
    <div class="row">
-    <h1 class="text-center">{{recipe.title}}</h1>
+    <h1 class="text-center">{{image.title}}</h1>
   </div>
 
 
   
    <div class="row">
     {% autoescape on %}
-    {{recipe.post| safe}}
+    {{image.post| safe}}
    {% endautoescape %}
 
   </div>
 
   <div class="row">
-    <p>Posted {{recipe.pub_date|timesince}} by {{recipe.chef.first_name}}</p>
+    <p>Posted {{image.pub_date|timesince}} by {{image.chef.first_name}}</p>
   </div>
 
 </div>

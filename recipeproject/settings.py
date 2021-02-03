@@ -1,5 +1,8 @@
 import os
 from decouple import config
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 """
 Django settings for recipeproject project.
 
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'tinymce',
     'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -142,3 +146,15 @@ EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
+cloudinary.config( 
+    cloud_name="dtmxohrtu",
+    api_key="156378187694462",
+    api_secret="tp62VgeaOx2P2aT7RqK9d4iukT0"
+)

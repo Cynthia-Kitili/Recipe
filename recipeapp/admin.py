@@ -8,3 +8,12 @@ class RecipeAdmin(admin.ModelAdmin):
 admin.site.register(Chef)
 admin.site.register(Recipe)
 admin.site.register(foods)
+
+from .models import Category,Location,Image
+
+class CategoryAdmin(admin.ModelAdmin):
+    filter_horizontal =('image',)
+
+admin.site.register(Category)
+admin.site.register(Location)
+admin.site.register(Image)

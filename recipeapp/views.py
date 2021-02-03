@@ -11,7 +11,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import  RecipeMerch
 from .serializer import MerchSerializer
-
+from rest_framework import status
+from .permissions import IsAdminOrReadOnly
+from .models import Image,Category,Location
 
 # Create your views here.
 def welcome(request):
@@ -19,24 +21,26 @@ def welcome(request):
 
 @login_required(login_url="/accounts/login/")
 def recipe_today(request):
+    images = Image.objects.all()
+    locations = Location.objects.all()
     date = dt.date.today()
     recipe = Recipe.todays_recipe()
-    # if request.method == 'POST':
-    #     form = RecipeForm(request.POST)
-    #     if form.is_valid():
-    #         name = form.cleaned_data['your_name']
-    #         email = form.cleaned_data['email']
-    #         recipient = RecipeRecipients(name = name,email =email)
-    #         recipient.save()
-    #         send_welcome_email(name,email)
-    #         HttpResponseRedirect('recipe_today')
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+            recipient = RecipeRecipients(name = name,email =email)
+            recipient.save()
+            send_welcome_email(name,email)
+            HttpResponseRedirect('recipe_today')
             
-    # else:
-    #     form = RecipeForm()
-    form = RecipeForm()
+    else:
+        form = RecipeForm()
+    
 
 
-    return render(request, 'all-recipes/today-recipe.html', {"date": date,"recipe":recipe,"letterForm":form})   
+    return render(request, 'all-recipes/today-recipe.html', {"date": date,'images': images[::-1], 'locations':locations,"recipe":recipe,"letterForm":form})   
 
 @login_required(login_url="/accounts/login/")
 def past_days_recipe(request, past_date):
@@ -102,9 +106,9 @@ def new_recipe(request):
     if request.method == 'POST':
         form = NewRecipeForm(request.POST, request.FILES)
         if form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.editor = current_user
-            recipe.save()
+            image = form.save(commit=False)
+            image.chef = current_user
+            image.save()
         return redirect('recipeToday')
 
     else:
@@ -126,3 +130,58 @@ class MerchList(APIView):
         all_merch = RecipeMerch.objects.all()
         serializers = MerchSerializer(all_merch, many=True)
         return Response(serializers.data)
+
+    def post(self, request, format=None):
+        serializers = MerchSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)    
+        permission_classes = (IsAdminOrReadOnly,)
+
+class MerchDescription(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    def get_merch(self, pk):
+        try:
+            return RecipeMerch.objects.get(pk=pk)
+        except RecipeMerch.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        merch = self.get_merch(pk)
+        serializers = MerchSerializer(merch)
+        return Response(serializers.data)
+
+    def put(self, request, pk, format=None):
+        merch = self.get_merch(pk)
+        serializers = MerchSerializer(merch, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)   
+
+    def delete(self, request, pk, format=None):
+        merch = self.get_merch(pk)
+        merch.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+# @login_required(login_url='/accounts/login/')
+# def photos(request):
+    
+#     images = Image.objects.all()
+#     locations = Location.objects.all()
+#     return render(request, 'all-recipes/today-recipe.html',{'images': images[::-1], 'locations':locations})        
+         
+@login_required(login_url='/accounts/login/')
+def location_filter(request, image_location):
+    location = Location.get_location_id(image_location)
+    images = Image.filter_by_location(image_location)
+    title = f'{location} recipe-today'
+    return render(request, 'all-recipes/location.html', {'title':title,'images':images,'location':location})
+    
+@login_required(login_url='/accounts/login/')
+def image_location(request, location):
+    images = Image.filter_by_location(location)
+    print(images)
+    return render(request, 'all-recipes/location.html', {'location_images': images})         

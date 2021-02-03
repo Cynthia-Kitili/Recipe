@@ -4,4 +4,4 @@ from .models import RecipeMerch
 class MerchSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecipeMerch
-        fields = ('name', 'description', 'price')
+        fields = ('id','name', 'description', 'price')
