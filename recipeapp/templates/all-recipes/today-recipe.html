@@ -1,5 +1,6 @@
 {%extends 'all-recipes/base.html'%}
 {% load bootstrap3 %}
+{% load static%}
 
 {% block content %}
 {{block.super}}
@@ -39,6 +40,9 @@
   
   </div>
   
-  
 
+{% endblock %}
+<!--End of the block content-->
+{% block scripts %} {{block.super}}
+  <script type="text/javascript" src="{%static 'js/recipeletter.js'%}"></script>
 {% endblock %}
