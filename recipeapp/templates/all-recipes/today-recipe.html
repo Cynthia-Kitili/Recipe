@@ -36,7 +36,7 @@
   
     {% empty %}
     <div class="row">
-      <h2 class="text-center">There No Recipes</h2>
+      
     </div>
     {% endfor %}
   
@@ -50,7 +50,7 @@
         <div class="card-columns">
     {% for image in images %}
     <div class="poraloid" data-toggle="modal" data-target="#{{image.id}}" >
-        <img src="{{image.image.url}}" alt="{{image.name}}" class="card-img" class="img-responsive" width="200px" height="150px">
+        <img src="{{image.image.url}}" alt="{{image.name}}" class="card-img" class="img-responsive" width="" height="">
     </div>
     
     <div class="modal fade " id="{{image.id}}" tabindex="-1" role="dialog"
@@ -90,7 +90,7 @@
             {% endfor %}
         </div>
     </div>
-</div>
+</div><hr><hr>
 <div class="container-fluid">
 
   <form  action="{%url 'recipeToday'%}" method="post">
