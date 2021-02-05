@@ -4,6 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital@1&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <!-- Google Fonts -->
@@ -31,7 +34,7 @@
 <body>
     {% include "navbar.html" %}
 
-    {% block content %} <h1 class= 'text-center'>Recipes posted on: {{date|date:"l d-F Y"}}</h1> {%endblock%}
+    {% block content %} <h1 class= 'text-center' style="color: black;">Recipes posted on: {{date|date:"l d-F Y"}}</h1> {%endblock%}
 
     {% block scripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 import datetime as dt
-from .models import Recipe, RecipeRecipients
-from .forms import RecipeForm, SignUpForm, NewRecipeForm
+from .models import*
+from .forms import*
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -16,9 +16,32 @@ from .permissions import IsAdminOrReadOnly
 from .models import Image,Category,Location
 
 # Create your views here.
+@login_required(login_url = '/accounts/login/')
+def index(request):
+    title = 'GLOBAL RECIPES'
+    return render(request, 'landing/index.html',{'title': title})
 def welcome(request):
     return render(request,'welcome.html')
 
+
+@login_required(login_url = '/accounts/login/')
+def profile(request):
+
+    user_posts = Image.objects.all()
+    return render(request,'profile.html',{'user_posts':user_posts})
+
+@login_required(login_url = '/accounts/login/')
+def edit_profile(request):
+
+    if request.method=='POST':
+        form = EditProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+
+    else:
+        form = EditProfileForm(instance=request.user)
+    return render(request,'update_profile.html',{'form':form})
 @login_required(login_url="/accounts/login/")
 def recipe_today(request):
     images = Image.objects.all()

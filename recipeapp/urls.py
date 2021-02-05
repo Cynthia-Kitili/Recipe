@@ -14,6 +14,8 @@ urlpatterns=[
     url(r'^api/merch/$', views.MerchList.as_view()),
     url(r'api/merch/merch-id/(?P<pk>[0-9]+)/$',views.MerchDescription.as_view()),
     url(r'^location/(?P<location>\w+)/', views.image_location, name='location'),
+    url(r'^editprofile/$',views.edit_profile,name='editprofile'),
+    url(r'^accounts/profile/$',views.profile,name='profile'),
 ]
 
 if settings.DEBUG:

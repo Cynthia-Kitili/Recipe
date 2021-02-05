@@ -96,6 +96,33 @@ class Location(models.Model):
     def delete_location(self):
         self.delete()
 
+class Profile(models.Model):
+    profile_pic = models.ImageField(upload_to='images/')
+    bio = models.CharField(max_length=300)
+    username = models.CharField(max_length=50,default='Your username')
+
+    def save_profile(self):
+        self.save()
+    
+    def delete_profile(self):
+        self.delete()
+
+    def profiles_posts(self):
+        return self.image_set.all()
+
+
+
+  
+    def search_profile(cls, username):
+
+       found_user = User.objects.get(username = username)
+
+       return found_user
+
+
+    def __str__(self):
+        return self.username
+
 class Image(models.Model):
     image = models.ImageField(blank=True, null=True,upload_to='images/')
     name = models.CharField(max_length=60)
@@ -114,7 +141,7 @@ class Image(models.Model):
     post = HTMLField( default='1')
     # pub_date = models.DateTimeField(auto_now_add=True,default='1')
     # food_image = models.ImageField(upload_to = 'recipe/',  default='1', blank = True)
-    
+    profile=models.ForeignKey(Profile,on_delete=models.CASCADE,default='1')
     @classmethod
     def filter_by_location(cls, location):
         image_location = Image.objects.filter(location__name=location).all()

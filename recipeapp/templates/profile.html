@@ -1,0 +1,73 @@
+{% extends 'base.html' %} {% load bootstrap3 %} {% load static %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="card" style="width:70%">
+            <h2 style="text-align: center;"> <u> My Profile</u> </h2>
+            {% if user.profile.profile_pic %}
+            <img style="border-radius: 50%; margin-left: 30%;" width="250px" height="250px" src=" {{user.profile.profile_pic.url}} " class="rounded-circle img-fluid" width="400px" alt="dp"> {% else %}
+            <img src="https://www.flaticon.com/svg/vstatic/svg/3135/3135715.svg?token=exp=1611101340~hmac=1ede0416fd3666ab12273730431686ba" style="border-radius: 50%; margin-left: 40%;" class="img-fluid" width="250px" height="250px" alt="dp"> {% endif%}
+            <div class="card-body">
+                <h4 class="card-title">
+                    <h3 style="text-align: center;">Username: {{user.username}} </h3>
+                </h4>
+                <p class="card-text">{% if user.profile.bio %}
+                    <h5 style="text-align: center;"><b>Bio:</b> {{user.profile.bio}}</h5>
+                    {% else %}
+                    <p style="text-align: center;">You have no bio yet</p>
+
+                    {% endif %}</p>
+                <a href="/editprofile" class="btn btn-primary" style="margin-left: 40%;">Update Profile</a>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        {% if my_posts %}
+        <h2 style="margin-left: 20%; margin-top: 5%;">My Posts</h2>
+        <div class="row">
+
+            {% for post in my_posts %}
+            <div class="card" style="width:500px ; margin: 3%;">
+                <h4 style="text-align: center;" class="card-title pictitle"> {{post.name}} </h4>
+                <a href="/singlepic/{{post.id}}">
+                    <img class="timelinepics card-img-top img-fluid" width="500px" height="450px" src=" {{post.ig_pic.url}} " alt="Image"></a>
+                <div class="card-body">
+
+                    <p style="text-align: center;" class="card-text">{{post.caption}}</p>
+                    <p class="card-text">Posted by: {{post.user}}</p>
+                    <div class="card-footer">
+                        <a href="{%url 'comment' post.id%}" class="btn btn-outline "> <button>Comment</button></a>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <!-- <a href="/comment/{{id}}"><button>Comment</button></a> -->
+
+
+            {% empty %}
+
+        </div>
+        {% endfor %} {% else %}
+        <p>No posts yet</p>
+        {% endif %}
+
+        <div class="col-md-2"></div>
+
+    </div>
+</div>
+{% endblock %}
